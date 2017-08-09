@@ -86,7 +86,7 @@ rss:
 
 # Specify the date when the site was setup
 #since: 2015
-
+since: 2017
 # icon between year and author @Footer
 authoricon: heart
 
@@ -213,8 +213,9 @@ font:
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
 #social:
   #LinkLabel: Link
-
-
+social:
+    GitHub: https://github.com/ShixiangWang
+    简书: http://www.jianshu.com/u/b6608e27dc74
 # Social Links Icons
 # Icon Mapping:
 #   Map a menu item to a specific FontAwesome icon name.
@@ -227,8 +228,12 @@ social_icons:
   GitHub: github
   Twitter: twitter
   Weibo: weibo
+  简书: etsy
 
-
+  
+# reward
+reward_comment: 人该是自己生活的主宰，而不是别人手里的行货
+alipay: /images/reward_image/alipay-reward-image.jpg
 # Sidebar Avatar
 # in directory: /assets/images/avatar.gif
 #avatar:
@@ -591,7 +596,7 @@ pace: false
 pace_theme: pace-theme-minimal
 
 # Canvas-nest
-canvas_nest: false
+canvas_nest: true
 
 # three_waves
 three_waves: false
