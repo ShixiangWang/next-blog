@@ -13,7 +13,7 @@ title: "关于：About"
 
 <p class="contact">
  <a href="https://github.com/ShixiangWang" title="Github联系我"><img src="http://www.github.com/favicon.ico" width="24" height="24" style="display:inline-block;vertical-align:middle"></a><br/>
-邮箱: shixiang1994wang@gmail.com 
+邮箱: wangshx@shanghaitech.edu.cn
 </p>
 
 ### 关于本站：
@@ -23,4 +23,6 @@ title: "关于：About"
 
 ## 其他流言
 * 未**女昏**人士；
-* LOL粉丝
+* LOL
+* 科幻迷
+* 恐怖电影粉
