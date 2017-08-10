@@ -6,7 +6,12 @@ categories:
 tags: 
 - TCGA analysis
 - R
+photos:
+- /images/demo_corrgram.png
+
 ---
+
+<!--more-->
 
 
 
