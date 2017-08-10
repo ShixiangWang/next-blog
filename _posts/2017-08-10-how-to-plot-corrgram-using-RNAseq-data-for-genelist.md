@@ -2,10 +2,10 @@
 title: 怎么分析和展示RNAseq基因表达数据中基因的相关性
 date: 2017-08-10
 categories: 
-	- R
+- R
 tags: 
-	- TCGA analysis
-	- R
+- TCGA analysis
+- R
 ---
 
 
