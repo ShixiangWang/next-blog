@@ -12,7 +12,7 @@ ability to support **MathJax**, which means I can write LaTeX-like equations tha
 nicely displayed in a web browser, like this one \\( \sqrt{\frac{n!}{k!(n-k)!}} \\) or
 this one \\( x^2 + y^2 = r^2 \\).
 
-<!--more-->
+<!-- more -->
 
 <img class="centered" src="https://www.mathjax.org/badge/mj-logo.svg" />
 
