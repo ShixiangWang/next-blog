@@ -135,7 +135,7 @@ tags:
 ---
 ```
 
-`date`指定了文章写作日期；`categories`指定了文章放置的目录；`tags`指定文章便签。这些信息书写后，Jekyll会自动将你的文章按时间顺序收录和生成标签云。是不是很赞~关于Jekyll以及YAML的相关知识，可以查看[官方中文文档](http://jekyllcn.com/docs/home/)喔。
+`date`指定了文章写作日期；`categories`指定了文章放置的目录；`tags`指定文章标签。这些信息书写后，Jekyll会自动将你的文章按时间顺序收录和生成标签云。是不是很赞~关于Jekyll以及YAML的相关知识，可以查看[官方中文文档](http://jekyllcn.com/docs/home/)喔。
 
 博文的内容需要服从Markdown语法。正文的话就直接打就行了，但是像标题，斜体，下划线等等的实现符合使用Markdown语法。Markdown非常简单易学，也非常流行，各大编程相关的网站（像Biostar, Stack overflow）都基本支持，[简书](http://www.jianshu.com/)也支持。想要了解的朋友可以查看https://github.com/ShixiangWang/README，或者依赖搜索引擎查阅相关资料。
 
