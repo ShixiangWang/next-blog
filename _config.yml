@@ -65,7 +65,7 @@ feed:
 # Plugins
 ## Docs: https://help.github.com/articles/configuring-jekyll-plugins/
 gems:
- - jemoji
+ #- jemoji
  - jekyll-sitemap
  - jekyll-feed
 
