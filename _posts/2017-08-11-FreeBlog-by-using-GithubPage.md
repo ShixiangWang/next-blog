@@ -65,8 +65,7 @@ tags:
 ## 公开博客
 这一部分就是为你的`Github`个人博客绑定域名。就像我的域名是flypeom.site，你在浏览器输入它，浏览器能够找到它的ip地址，从而打开你的博客主页。
 
->虽然在Internet上可以访问我们的网站，但是网址是GitHub提供的:[http://xxxx.github.io*
->"); background-size: cover; background-position: 0px 2px;">*](http://link.zhihu.com/?target=http%3A//xxxx.github.io) (知乎排版可能会出现"http://"字样) 而我们想使用我们自己的个性化域名，这就需要绑定我们自己的域名。这里演示的是在阿里云万网的域名绑定，在国内主流的域名代理厂商也就阿里云和腾讯云。登录到阿里云，进入管理控制台的域名列表，找到你的个性化域名，进入解析
+>虽然在Internet上可以访问我们的网站，但是网址是GitHub提供的:http://xxxx.github.io ，而我们想使用我们自己的个性化域名，这就需要绑定我们自己的域名。这里演示的是在阿里云万网的域名绑定，在国内主流的域名代理厂商也就阿里云和腾讯云。登录到阿里云，进入管理控制台的域名列表，找到你的个性化域名，进入解析
 >![](http://upload-images.jianshu.io/upload_images/3884693-e4dc8d7fa29a242e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 >然后添加解析
 >![](http://upload-images.jianshu.io/upload_images/3884693-ba44d23fc51bb01f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
