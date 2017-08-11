@@ -231,7 +231,7 @@ fi
 `if-then`语句允许我们使用布尔逻辑来组合测试。可用
 
 - [ condition1] && [ condition2]
-- [ condition1] || [ condition2]
+- `[ condition1] || [ condition2]`
 
 ### if-then的高级特性
 
