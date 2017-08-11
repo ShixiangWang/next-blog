@@ -99,7 +99,52 @@ PING sni.github.map.fastly.net (151.101.193.147) 56(84) bytes of data.
 里面就一行字符，写的就是域名。
 ![cname_content.png](http://upload-images.jianshu.io/upload_images/3884693-ce7bdb19d983510d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
+
+## 写博客
+
+上述配置完后，剩下你需要关心的只有写博文了。博文的书写需要遵循一定的要求，包括3方面：
+
+- 头信息
+- 博文内容
+- 文件名
+
+头信息是需要遵循YAML语法的一些信息，书写在文件的头部。内容可以有很多，它的格式如下：
+
+```yaml
+---
+layout: post
+title: This is my first blog
+---
+```
+
+这是符合YAML语法的头信息，它用来让Jekyll正确解析该文件的内容。比如说`layout`指定了这是一篇博文，`title`指定了题目。
+
+常用的有以下几个键值对：
+
+```yaml
+---
+title: My blog title
+date: 2017-08-11
+categories:
+- life
+- more
+tags:
+- blog
+- post
+---
+```
+
+`date`指定了文章写作日期；`categories`指定了文章放置的目录；`tags`指定文章便签。这些信息书写后，Jekyll会自动将你的文章按时间顺序收录和生成标签云。是不是很赞~关于Jekyll以及YAML的相关知识，可以查看[官方中文文档](http://jekyllcn.com/docs/home/)喔。
+
+博文的内容需要服从Markdown语法。正文的话就直接打就行了，但是像标题，斜体，下划线等等的实现符合使用Markdown语法。Markdown非常简单易学，也非常流行，各大编程相关的网站（像Biostar, Stack overflow）都基本支持，[简书](http://www.jianshu.com/)也支持。想要了解的朋友可以查看https://github.com/ShixiangWang/README，或者依赖搜索引擎查阅相关资料。
+
+博文存档时的文件名需要符合特定的格式要求：可以是`.md`文件和`.html`文件。如果是前者，Jekyll会自动将它解析成网页。命名则是`xxxx-xx-xx-*.md`，其中`xxxx-xx-xx`需要填入书写博文的时间，比如今天应该书写为`2017-08-11`，`*`指代可以填入任意内容，用以区分文件。`.md`表示是Markdown文件。
+
+
+
 -----------------
+
 文章内容已经写完了，有什么疑问欢迎和我交流。能力所限，难免有所遗漏，大家多多包涵。
 
 感觉NexT主题很不错，非常简约，本人十分喜欢。如果你也喜欢它，也想搭建这样的博客，就一起来吧。你可以看到我是两天前开始弄的，现在就已经在这里给你们写经验了。其实非常简单， 我自己摸索还走了不少弯路。Come on.
