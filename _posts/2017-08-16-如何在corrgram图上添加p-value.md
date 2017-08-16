@@ -9,6 +9,8 @@ tags:
 - 相关
 ---
 
+<!-- more -->
+
 这篇文章可以说是[怎么分析和展示RNAseq基因表达数据中基因的相关性](http://www.jianshu.com/p/7b7fd40124ac)的延续。上次绘制了下图：
 ![](http://upload-images.jianshu.io/upload_images/3884693-236f5dfa52f66078.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
