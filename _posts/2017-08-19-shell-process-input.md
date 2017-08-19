@@ -1011,7 +1011,11 @@ Line 3: O Romeo, Romeo! Wherefore art thou Romeo?
 Finished processing the file
 ```
 
----
+
+
+
+
+
 
 写shell脚本的基本内容大体已经整完了，我自己也是边看边想边码过来的。shell博大精深，更多高级内容有待继续学习整理。码字实属不易，觉得内容还行的点赞支持下吧~
 
