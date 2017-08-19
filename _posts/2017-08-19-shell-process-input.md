@@ -5,9 +5,10 @@ categories:
 - Linux
 tags:
 - bash shell
--shell笔记
+- shell笔记
 
 ---
+
 
 **Shell脚本笔记系列：**
 
