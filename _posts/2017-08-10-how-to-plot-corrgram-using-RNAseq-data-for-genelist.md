@@ -1,6 +1,6 @@
 ---
 title: 怎么分析和展示RNAseq基因表达数据中基因的相关性
-date: 2017-08-10
+date: 2017-08-08
 categories: 
 - R
 tags: 
