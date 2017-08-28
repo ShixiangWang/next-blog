@@ -144,7 +144,7 @@ It seems has no Metastatic sample in this analysis.
 
 看看输出的图形结果吧，这里只放一张原位癌病人的图当做demo。
 
-![](/images/demo_corrgram.png)
+![](../images/demo_corrgram.png)
 
 关于图形的输出效果可以参考`corrgram`包参数（help一下）设定，《R实战》书中有它的介绍。这里设定的是下三角用阴影图，上三角用饼图，两种结果的解释是一致的。
 
