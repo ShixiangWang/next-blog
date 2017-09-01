@@ -1,0 +1,43 @@
+---
+title: "安装和使用R包"
+date: 2017-09-01
+status: process
+output: html_notebook
+categories: "Cook book for R"
+tags:
+- R
+- Packages
+---
+
+
+# 问题
+
+你想要安装和使用一个R包。
+
+# 方案
+
+如果你正在使用支持R的图形界面软件，应该存在通过菜单栏方式安装R包的选项（比如，常用的Rstudio中，可以点击菜单栏Tools中的Install Packages进行R包的安装）。
+
+这里主要介绍如何用命令行来安装R包。
+
+```
+install.packages("reshape2") # reshap2为包名
+```
+
+在一个新R线程中使用该包之前，你必须先导入它。
+
+```
+library(reshape2)
+```
+如果你在一个脚本中使用该包，把这一行输入脚本中。
+
+如果想要更新包，使用
+```
+update.packages()
+```
+
+如果你在Linux系统上使用R，管理员可能已经在系统上安装了一些R包，你将不能以上述方式对R包更新（因为你没有权限）。
+
+********
+
+原文链接：http://www.cookbook-r.com/Basics/Installing_and_using_packages/

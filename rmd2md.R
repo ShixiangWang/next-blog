@@ -21,7 +21,7 @@ rmd2md <- function( path_site = getwd(),
                     out_ext='.md', 
                     in_ext='.Rmd', 
                     recursive=FALSE) {
-    
+    Sys.setlocale(category = "LC_ALL", locale = "us")
     require(knitr, quietly=TRUE, warn.conflicts=FALSE)
     
     #andy change to avoid path problems when running without sh on windows 

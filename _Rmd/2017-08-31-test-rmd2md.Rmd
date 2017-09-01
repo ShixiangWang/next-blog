@@ -1,7 +1,7 @@
 ---
 title: "R Notebook test"
 date: 2017-08-31
-status: process
+status: done_process
 output: html_notebook
 categories: R
 tags:
