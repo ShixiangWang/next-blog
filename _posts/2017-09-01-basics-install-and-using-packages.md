@@ -44,4 +44,4 @@ update.packages()
  
 ********
  
-原文链接：http://www.cookbook-r.com/Basics/Installing_and_using_packages/
+原文链接：<http://www.cookbook-r.com/Basics/Installing_and_using_packages/>
