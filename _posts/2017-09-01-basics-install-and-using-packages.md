@@ -45,3 +45,11 @@ update.packages()
 ********
  
 原文链接：<http://www.cookbook-r.com/Basics/Installing_and_using_packages/>
+ 
+# 其他
+ 
+***
+导入包也可以使用`require()`函数。
+ 
+by 诗翔
+***
