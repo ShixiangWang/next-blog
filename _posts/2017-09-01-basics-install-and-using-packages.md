@@ -3,7 +3,9 @@ title: "安装和使用R包"
 date: 2017-09-01
 status: publish
 output: html_notebook
-categories: "Cook book for R"
+categories: 
+- R
+- R-Cookbook
 tags:
 - R
 - Packages
