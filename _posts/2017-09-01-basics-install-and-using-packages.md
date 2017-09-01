@@ -52,4 +52,4 @@ update.packages()
 导入包也可以使用`require()`函数。
  
 by 诗翔
-***
+ 
