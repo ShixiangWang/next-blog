@@ -215,6 +215,8 @@ puts markdown.to_html
 我们可以使用**MathJax**语法输入*LaTex*数学公式。
 
 用一个`$`开始和结尾会生成行内公式。而用`$$`开始和结尾并单独生成公式块。
+
+  
 $$
 \mathbf{V}_1 \times \mathbf{V}_2 =  \begin{vmatrix} 
 \mathbf{i} & \mathbf{j} & \mathbf{k} \\
@@ -222,6 +224,8 @@ $$
 \frac{\partial X}{\partial v} &  \frac{\partial Y}{\partial v} & 0 \\
 \end{vmatrix}
 $$
+
+
 比如我们如果要生成如上公式，需要输入
 
 ```markdown
@@ -528,9 +532,13 @@ $\lim_{x\to\infty}\exp(-x)=0$
 $\lim_{x\to\infty}\exp(-x)=0$
 
 同样的公式，我用`$$`分隔就会变成：
+
+
 $$
 \lim_{x\to\infty}\exp(-x)=0
 $$
+
+
 可以看到显示效果的不同哈。
 
 
@@ -569,5 +577,5 @@ X的平方可以表示为`X^2^`，即X^2^ 。
 
 关于Typora的使用除了查看本文档外，还需要大家自己多摸索。用`Ctrl`加逗号键可以打开Typora的选项设定，有的功能没有激活，需要我们手动设定下，也可以看看有其他什么有趣有用的功能。欢迎留言评论。
 
-最后，因为Markdown编辑器不同，简书上查阅可能有一些小问题。如果发现了话，只能去我博客（由Github Pages生成的，所以应该满足本文本的语法支持要求）查看相应内容。
+最后说明，因为Markdown编辑器不同，简书或者博客上查阅可能有一些小问题。以Typora编辑器为准。
 
