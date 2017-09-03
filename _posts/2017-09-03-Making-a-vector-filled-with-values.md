@@ -19,64 +19,27 @@ tags:
  
 # 方案
  
-
-{% highlight r %}
-rep(1:50)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-## [24] 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46
-## [47] 47 48 49 50
-{% endhighlight %}
+```R
+rep(1, 50)
+#  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+# [39] 1 1 1 1 1 1 1 1 1 1 1 1
+ 
+rep(F, 20)
+#  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+# [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
  
  
-
-{% highlight r %}
-rep(FALSE, 20)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [12] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-{% endhighlight %}
- 
-
-{% highlight r %}
 rep(1:5, 4)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##  [1] 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
-{% endhighlight %}
+# 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
  
-
-{% highlight r %}
 rep(1:5, each=4)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##  [1] 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5
-{% endhighlight %}
+# 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5
  
-在一个因子变量上使用
  
-
-{% highlight r %}
+ 
+# 用在因子变量上
 rep(factor(LETTERS[1:3]), 5)
-{% endhighlight %}
-
-
-
-{% highlight text %}
-##  [1] A B C A B C A B C A B C A B C
-## Levels: A B C
-{% endhighlight %}
+# A B C A B C A B C A B C A B C
+# Levels: A B C
+ 
+```
