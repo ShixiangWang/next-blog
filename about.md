@@ -1,6 +1,6 @@
 ---
 title: about
-layout: page
+layout: post
 ---
  * **Name:**  王诗翔
  * **Email:** [w_shixiang@163.com](mailto:w_shixiang@163.com)
