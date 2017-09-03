@@ -43,3 +43,7 @@ rep(factor(LETTERS[1:3]), 5)
 # Levels: A B C
  
 ```
+ 
+***
+ 
+原文链接：<http://www.cookbook-r.com/Basics/Making_a_vector_filled_with_values/>
