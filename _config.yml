@@ -4,10 +4,10 @@
 # ---------------------------------------------------------------
 
 # Site
-title: Shixiang's Personal Site
+title: ChanYan's Personal Site
 subtitle:
-description: 逢君一笑，人间无此欢喜
-author: 诗翔
+description:我们都是傻的
+author:陈彦
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: zh-Hans
 date_format: '%Y-%m-%d'
@@ -214,8 +214,8 @@ font:
 #social:
   #LinkLabel: Link
 social:
-    GitHub: https://github.com/ShixiangWang
-    简书: http://www.jianshu.com/u/b6608e27dc74
+    GitHub: https://github.com/Yanjiachan
+    简书: http://www.jianshu.com/users/a7842a9397fa/timeline
 # Social Links Icons
 # Icon Mapping:
 #   Map a menu item to a specific FontAwesome icon name.

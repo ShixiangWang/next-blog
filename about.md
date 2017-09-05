@@ -2,6 +2,6 @@
 title: about
 layout: post
 ---
- * **Name:**  王诗翔
- * **Email:** [w_shixiang@163.com](mailto:w_shixiang@163.com)
- * **Github:** [ShixiangWang](https://github.com/ShixiangWang)
+ * **Name:** 陈彦
+ * **Email:** [15602320806@163.com](mailto:15602320806@163.com)
+ * **Github:** [Yanjiachan](https://github.com/Yanjiachan)
