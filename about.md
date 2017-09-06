@@ -1,6 +1,5 @@
 ---
 title: about
-layout: page
 ---
 
 
