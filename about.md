@@ -1,7 +1,9 @@
 ---
-title: about
+layout: about
+title: About Me
+header: About Me
+group: navigation
 ---
-
 
  * **Name:**  王诗翔
  
