@@ -50,6 +50,48 @@ update.packages()
  
 ***
 导入包也可以使用`require()`函数。
+
+
+
+常见的包安装命令
+
+| 命令                 | 描述                           |      |
+| ------------------ | ---------------------------- | ---- |
+| installed.packages | 返回一个矩阵，包含所有已安装的包信息           |      |
+| available.packages | 返回一个矩阵，包含资源库上所有可用的R包         |      |
+| old.packages       | 返回一个矩阵，显示所有已安装的包中具有新版本的包     |      |
+| new.packages       | 返回一个矩阵，显示所有可从资源库上获得而当前尚未安装的包 |      |
+| download.packages  | 下载一系列R包到本地目录                 |      |
+| install.packages   | 从资源库下载安装一系列R包                |      |
+| remove.packages    | 移除一系列已安装的R包                  |      |
+| update.packages    | 将已经安装的R包更新到最新版本              |      |
+| setRepositories    | 设定当前的R包的资源库列表                |      |
+
+
+
+**通过命令行安装R包**
+
+```shell
+R CMD INSTALL aplpack_1.1.1.tgz # 安装aplpack包
+```
+
+
+
+**从其他资源库安装R包**
+
+`devtools`库提供了从其他流行的`Git`资源库或其他URL上安装R包的工具。
+
+比如我们想安装开发版本的`ggplot2`包，可以使用下面命令：
+
+```R
+# 如果没有安装devtools，需要先安装
+install.packages("devtools")
+
+library(devtools)
+install_github("ggplot2")
+```
+
+更多信息查看相应的帮助文档。
  
 by 诗翔
  
