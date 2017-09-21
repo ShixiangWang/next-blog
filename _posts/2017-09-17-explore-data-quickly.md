@@ -50,6 +50,7 @@ qplot(wt, mpg, data=mtcars)
 # ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
 {% endhighlight %}
  
+<!-- more --> 
  
 # 绘制折线图
  
