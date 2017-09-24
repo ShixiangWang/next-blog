@@ -98,8 +98,259 @@ wsx@wsx-ubuntu:~$ kill -9 5456
 wsx@wsx-ubuntu:~$ kill -9 5452
 [1]-  已杀死               sleep 1000
 [2]+  已杀死               sleep 1000
-
 ```
 
 
-待续
+
+### 捕获信号
+
+`trap`命令允许我们来指定shell脚本要监看并从shell中拦截的Linux信号。
+
+格式为：
+
+```shell
+trap commands signals
+```
+
+下面展示一个简单的例子，看如何使用`trap`命令忽略`SIGINT`信号，并控制脚本的行为。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ cat test1.sh
+#!/bin/bash
+# Testing signal trapping
+#
+trap "echo ' Sorry! I have trapped Ctrl-C'" SIGINT
+#
+echo This is a test script
+#
+count=1
+while [ $count -le 10 ]
+do
+    echo "Loop #$count"
+    sleep 1
+    count=$[ $count + 1 ]
+done
+#
+echo "This is the end of the test script"
+#
+```
+
+来运行测试一下：
+
+```shell
+wangsx@SC-201708020022:~/tmp$ ./test1.sh
+This is a test script
+Loop #1
+Loop #2
+Loop #3
+Loop #4
+Loop #5
+Loop #6
+^C Sorry! I have trapped Ctrl-C
+Loop #7
+Loop #8
+Loop #9
+Loop #10
+This is the end of the test script
+```
+
+
+
+### 捕获信号
+
+我们也可以在shell脚本退出时进行捕获。这是**在shell完成任务时执行命令的一种简便方法**。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ cat test2.sh
+#!/bin/bash
+# Trapping the script exit
+#
+trap "echo Goodbye..." EXIT
+#
+count=1
+while [ $count -le 5 ]
+do
+    echo "Loop #$count"
+    sleep 1
+    count=$[ $count + 1 ]
+done
+#
+
+wangsx@SC-201708020022:~/tmp$ ./test2.sh
+Loop #1
+Loop #2
+Loop #3
+Loop #4
+Loop #5
+Goodbye...
+```
+
+当该脚本运行到退出位置，捕获就触发了，shell会执行在`trap`命令行指定的命令。就算提取退出，也能够成功捕获。
+
+
+
+### 修改或移除捕获
+
+想在不同的位置进行不同的捕获处理，只需要重新使用带新选项的`trap`命令。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ cat test3.sh
+#!/bin/bash
+# Modifying a set trap
+#
+trap "echo ' Sorry... Ctrc-C is trapped.'" SIGINT # SIGINT是退出信号
+#
+count=1
+while [ $count -le 5 ]  # 当count<5的时候
+do
+    echo "Loop #$count"
+    sleep 1    # 睡1秒
+    count=$[ $count + 1 ]
+done
+
+#
+trap "echo ' I modified the trap!'" SIGINT
+#
+count=1
+while [ $count -le 5 ]  # 当count<5的时候
+do
+    echo "Loop #$count"
+    sleep 1    # 睡1秒
+    count=$[ $count + 1 ]
+done
+wangsx@SC-201708020022:~/tmp$ ./test3.sh
+Loop #1
+Loop #2
+Loop #3
+^C Sorry... Ctrc-C is trapped.
+Loop #4
+Loop #5
+Loop #1
+Loop #2
+Loop #3
+^C I modified the trap!
+Loop #4
+Loop #5
+```
+
+相当于两次不同的捕获。
+
+我们也可以删除已经设置好的捕获。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ cat test3.sh
+#!/bin/bash
+# Modifying a set trap
+#
+trap "echo ' Sorry... Ctrc-C is trapped.'" SIGINT # SIGINT是退出信号  在这里设置捕获
+#
+count=1
+while [ $count -le 5 ]  # 当count<5的时候
+do
+    echo "Loop #$count"
+    sleep 1    # 睡1秒
+    count=$[ $count + 1 ]
+done
+
+#
+trap -- SIGINT # 在这里删除捕获
+echo "I modified the trap!"
+#
+count=1
+while [ $count -le 5 ]  # 当count<5的时候
+do
+    echo "Loop #$count"
+    sleep 1    # 睡1秒
+    count=$[ $count + 1 ]
+done
+wangsx@SC-201708020022:~/tmp$ ./test3.sh
+Loop #1
+Loop #2
+Loop #3
+Loop #4
+Loop #5
+I modified the trap!
+Loop #1
+Loop #2
+Loop #3
+^C
+```
+
+信号捕获被移除之后，脚本会按照原来的方式处理`SIGINT`信号。所以使用`Ctrl+C`键时，脚本运行会退出。当然，如果是在这个信号捕获移除前接受到`SIGINT`信号，那么脚本还是会捕获。（因为shell脚本运行是按步的，前面没有接收到信号捕获的移除，自然不会实现信号捕获的移除）
+
+
+
+## 以后台模式运行脚本
+
+### 后台运行脚本
+
+以后台模式运行shell脚本非常简单，只要再命令后加`&`符就可以了。
+
+```shell
+wangsx@SC-201708020022:~$ cat test4.sh
+#!/bin/bash
+# Testing running in the background
+#
+count=1
+while [ $count -le 10 ]
+do
+    sleep 1
+    count=$[ $count + 1 ]
+done
+wangsx@SC-201708020022:~$ ./test4.sh &
+[1] 69
+```
+
+当添加`&`符号后，命令和bash shell会分离而作为一个独立的后台进行运行。并返回作业号（方括号内）和进程ID（PID），Linux系统上运行的每一个进程都必须有一个唯一的PID。
+
+当后台进程结束后，它会在终端显示出消息：
+
+```shell
+[1]   已完成               ./test4.sh
+```
+
+需要注意的是，当后台程序运行时，它仍然会使用终端显示器显示`STDOUT`和`STDERR`消息。最好是将`STDOUT`和`STDERR`进行重定向。
+
+
+
+### 运行多个后台作业
+
+我们可以在命令提示符中同时启动多个后台作用，然后用`ps`命令查看。
+
+```shell
+wangsx@SC-201708020022:~$ ./test4.sh &
+[1] 117
+wangsx@SC-201708020022:~$ ./test5.sh &
+[2] 122
+wangsx@SC-201708020022:~$ ./test6.sh &
+[3] 128
+wangsx@SC-201708020022:~$ ps
+  PID TTY          TIME CMD
+    2 tty1     00:00:00 bash
+  117 tty1     00:00:00 test4.sh
+  122 tty1     00:00:00 test5.sh
+  128 tty1     00:00:00 test6.sh
+  135 tty1     00:00:00 sleep
+  136 tty1     00:00:00 sleep
+  137 tty1     00:00:00 ps
+  138 tty1     00:00:00 sleep
+```
+
+我们特别需要注意，如果终端退出，后台程序也会随之退出。
+
+### 在非控制台下运行脚本
+
+如果我们不想出现终端退出后台程序退出的情况，可以使用`nohup`命令来实现。
+
+**`nohup`命令运行了另外一个命令来阻断所有发送给该进程的`SIGHUP`信号。这会在退出终端会话时阻止进程退出。**
+
+其格式如下：
+
+```shell
+wangsx@SC-201708020022:~$ nohup ./test4.sh  &
+[1] 156
+wangsx@SC-201708020022:~$ nohup: 忽略输入并把输出追加到'nohup.out'
+```
+
+由于`nohup`命令会解除终端与进程的关联，进程也就不再同`STDOUT`和`STDERR`联系在一起。它会自动将这两者重定向到名为`nohup.out`的文件中。
+
