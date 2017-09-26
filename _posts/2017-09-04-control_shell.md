@@ -477,18 +477,41 @@ wangsx@SC-201708020022:~/tmp$ jobs
 要让命令以更低的优先级运行，只要用`nice`的`-n`命令行来指定新的优先级级别。
 
 ```shell
-wangsx@SC-201708020022:~/tmp$ sudo nice -n 10 ./test10.sh > test10.out &
-[2] 36
-wangsx@SC-201708020022:~/tmp$ ps -p 36 -o pid,ppid,ni,cmd
-  PID  PPID  NI CMD
-   36     2   0 sudo nice -n 10 ./test10.sh
+wsx@ubuntu:~/tmp$ nice -n 10 ./test10.sh > test10.out &
+[5] 18953
+wsx@ubuntu:~/tmp$ ps -p 18953 -o pid,ppid,ni,cmd
+   PID   PPID  NI CMD
+ 18953  18782  10 /bin/bash ./test10.sh
 
-[2]+  已停止               sudo nice -n 10 ./test10.sh > test10.out
+```
+
+如果想要提高优先级，需要使用超级用户权限。`nice`命令的`-n`选项不是必须的，只需要在破折号后面跟上优先级就行了。
+
+```shell
+wsx@ubuntu:~/tmp$ nice -10 ./test10.sh > test10.out &
+[6] 18999
+[5]   Done                    nice -n 10 ./test10.sh > test10.out
+wsx@ubuntu:~/tmp$ ps -p 18999 -o pid,ppid,ni,cmd
+   PID   PPID  NI CMD
+ 18999  18782  10 /bin/bash ./test10.sh
 ```
 
 ### renice命令
 
+有时候我们想要改变系统上已经运行命令的优先级，这是`renice`命令可以做到的。它允许我们指定PID来改变它的优先级。
 
+```shell
+wsx@ubuntu:~/tmp$ ./test10.sh & 
+[3] 19086
+wsx@ubuntu:~$ ps -p 19086 -o pid,ppid,ni,cmd
+   PID   PPID  NI CMD
+ 19086  19070   0 /bin/bash ./test10.sh
+wsx@ubuntu:~$ renice -n 10 -p 19086
+19086 (process ID) old priority 0, new priority 10
+wsx@ubuntu:~$ ps -p 19086 -o pid,ppid,ni,cmd
+   PID   PPID  NI CMD
+ 19086  19070  10 /bin/bash ./test10.sh
+```
 
 ## 定时运行脚本
 
@@ -575,4 +598,178 @@ This is the script's end...
 ```
 
 这里使用了`-M`选项来屏蔽作业产生的输出信息。
+
+#### 列出等待的作业
+
+`atq`命令可以查看系统中有哪些作业再等待。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ at -M -f test13b.sh teatime
+warning: commands will be executed using /bin/sh
+job 11 at Wed Sep 27 16:00:00 2017
+Can't open /var/run/atd.pid to signal atd. No atd running?
+wangsx@SC-201708020022:~/tmp$ sudo /etc/init.d/atd start
+[sudo] wangsx 的密码：
+ * Starting deferred execution scheduler atd                                                                     [ OK ]
+wangsx@SC-201708020022:~/tmp$ at -M -f test13b.sh teatime
+warning: commands will be executed using /bin/sh
+job 12 at Wed Sep 27 16:00:00 2017
+wangsx@SC-201708020022:~/tmp$ at -M -f test13b.sh tomorrow
+warning: commands will be executed using /bin/sh
+job 13 at Wed Sep 27 21:44:00 2017
+wangsx@SC-201708020022:~/tmp$ at -M -f test13b.sh 13:30
+warning: commands will be executed using /bin/sh
+job 14 at Wed Sep 27 13:30:00 2017
+wangsx@SC-201708020022:~/tmp$ atq
+11      Wed Sep 27 16:00:00 2017 a wangsx
+12      Wed Sep 27 16:00:00 2017 a wangsx
+13      Wed Sep 27 21:44:00 2017 a wangsx
+14      Wed Sep 27 13:30:00 2017 a wangsx
+```
+
+作业列表中显示了作业号、系统运行该作业的日期和时间以及它所在的队列位置。
+
+#### 删除作业
+
+使用`atrm`命令删除等待中的作业。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ atq
+11      Wed Sep 27 16:00:00 2017 a wangsx
+12      Wed Sep 27 16:00:00 2017 a wangsx
+13      Wed Sep 27 21:44:00 2017 a wangsx
+14      Wed Sep 27 13:30:00 2017 a wangsx
+wangsx@SC-201708020022:~/tmp$ atrm 11
+wangsx@SC-201708020022:~/tmp$ atq
+12      Wed Sep 27 16:00:00 2017 a wangsx
+13      Wed Sep 27 21:44:00 2017 a wangsx
+14      Wed Sep 27 13:30:00 2017 a wangsx
+```
+
+只能删除自己提交的作业，不能删除其他人的。
+
+
+
+### 安排需要定期执行的脚本
+
+如果是需要定期执行的脚本，我们不需要使用`at`不断提交作业，而是可以利用Linux系统的另一个功能。
+
+**Linux系统使用`cron`程序来安排要定期执行的作业。它会在后台运行并检查一个特殊的表（成为cron时间表），以获得已安排执行的作业。**
+
+#### cron时间表
+
+`cron`时间表的格式如下：
+
+```shell
+min hour dayofmonth month dayofweek command
+```
+
+`cron`时间表允许我们用特定值、取值范围（比如1-5）或者通配符（星号）来指定条目。
+
+例如，我们想在每天的10:15运行一个命令，可以使用：
+
+```shell
+15 10 * * * command
+```
+
+在其中三个字段使用了通配符，表明`cron`会在每个月的每天的10:15执行该命令。
+
+要指定在每周一4:15PM运行命令，可以使用：
+
+```shell
+15 16 * * 1 command
+```
+
+可以用三字符的文本值mon,tue,wed,thu,fri,sat,sum或数值（0为周日，6为周六）来指定dayofweek的表项。
+
+`dayofmonth`可以用1-31表示。
+
+```shell
+# 怎么在每个月的最后一天执行命令？
+00 12 * * * if [`date +%d -d tomorrow` = 01 ]; then ; command
+```
+
+命令列表必须指定要运行的命令或脚本的全路径名。
+
+```shell
+# 例如
+15 10 * * * /home/rich/test4.sh > test4out
+```
+
+注意：`corn`会用提交作业的用户账户运行脚本，所以我们在操作指定文件时必须有相应权限。
+
+#### 构建cron时间表
+
+Linux提供了`crontab`命令来处理`cron`时间表。我们可以使用`-l`选项列出时间表。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ crontab -l
+no crontab for wangsx
+```
+
+要添加条目，使用`-e`选项。在添加条目时，`crontab`命令会启动一个文本编辑器，使用已有的`cron`时间表作为文件内容。
+
+#### 浏览cron目录
+
+如果对时间精确性要求不高，用预配置的`cron`脚本目录会更方便。有4个基本目录：hourly, daily, monthly和weekly。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ ls /etc/cron.*ly
+/etc/cron.daily:
+apport      bsdmainutils  man-db   passwd                  upstart
+apt-compat  dpkg          mdadm    popularity-contest
+aptitude    logrotate     mlocate  update-notifier-common
+
+/etc/cron.hourly:
+
+/etc/cron.monthly:
+
+/etc/cron.weekly:
+fstrim  man-db  update-notifier-common
+```
+
+如果脚本需要每天运行一次，只要将脚本复制到daily目录，cron每天会执行它。
+
+#### anacron程序
+
+如果提交的作业需要运行时系统处于关机状态，`cron`不会运行那些错过的脚本。为了解决这个问题，`anacron`程序诞生了。
+
+如果`anacron`知道某个作业错过了执行时间，它会尽快运行该作业。这个功能常用于进行常规日志维护的脚本。
+
+`anacron`程序只会处理位于`cron`目录下的程序，比如`/etc/cron.monthly`。它使用时间戳来决定作业是否在正确的计划间隔内运行了，每个`cron`目录都有个时间戳文件，该文件位于`/var/spool/anacron`。
+
+`anacron`程序使用自己的时间表来检查作业目录。
+
+```shell
+wsx@ubuntu:~$ sudo cat /var/spool/anacron/cron.monthly
+[sudo] password for wsx: 
+20170926
+wsx@ubuntu:~$ sudo cat /etc/anacrontab
+# /etc/anacrontab: configuration file for anacron
+
+# See anacron(8) and anacrontab(5) for details.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+HOME=/root
+LOGNAME=root
+
+# These replace cron's entries
+1       5       cron.daily      run-parts --report /etc/cron.daily
+7       10      cron.weekly     run-parts --report /etc/cron.weekly
+@monthly        15      cron.monthly    run-parts --report /etc/cron.monthly
+
+```
+
+`anacron`的时间表的基本格式和`cron`时间表略有不同：
+
+```shell
+period delay identifier command
+```
+
+`period`定义了作业多久运行一次，以天为单位。`anacron`用此条目来检查作业的时间戳文件。`delay`条目会指定系统启动后`anacron`程序需要等待多少分钟再开始运行错过的脚本。`command`条目包含了`run-parts`程序和一个`cron`脚本目录名。`run-parts`程序负责运行目录中传给它的任何脚本。
+
+注意了，`anacron`不会处理执行时间需求小于一天的脚本，所以它是不会运行`/etc/cron.hourly`的脚本。
+
+`identifier`条目是一种特别的非空字符串，如`cron-weekly`。它用于唯一标识日志消息和错误邮件中的作业。
 
