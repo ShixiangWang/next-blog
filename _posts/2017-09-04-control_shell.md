@@ -338,7 +338,7 @@ wangsx@SC-201708020022:~$ ps
 
 我们特别需要注意，如果终端退出，后台程序也会随之退出。
 
-### 在非控制台下运行脚本
+## 在非控制台下运行脚本
 
 如果我们不想出现终端退出后台程序退出的情况，可以使用`nohup`命令来实现。
 
@@ -353,4 +353,226 @@ wangsx@SC-201708020022:~$ nohup: 忽略输入并把输出追加到'nohup.out'
 ```
 
 由于`nohup`命令会解除终端与进程的关联，进程也就不再同`STDOUT`和`STDERR`联系在一起。它会自动将这两者重定向到名为`nohup.out`的文件中。
+
+
+
+## 作业控制
+
+启动、停止终止以及恢复作业统称为**作业控制**。我们可以通过这几种方式完全控制shell环境中所有的进程的运行方式。
+
+### 查看作业
+
+作业控制的**关键命令**是`jobs`命令。它允许查看shell当前正在处理的作业。
+
+```shell
+wangsx@SC-201708020022:~$ cat test10.sh
+#!/bin/bash
+# Test job control
+#
+echo "Script Process ID: $$"
+#
+count=1
+while [ $count -le 10 ]
+do
+    echo "Loop #$count"
+    sleep 10
+    count=$[ $count + 1 ]
+done
+#
+echo "End of script..."
+#
+wangsx@SC-201708020022:~$ ./test10.sh
+Script Process ID: 27
+Loop #1
+Loop #2
+^Z^C # 我的ctrl+z好像不起作用
+```
+
+脚本用`$$`变量来显示系统分配给脚本的PID。使用Ctrl+Z组合键来停止脚本（我的在这不起作用~之前好像也是）。
+
+我们使用同样的脚本，利用`&`将另外一个作业作为后台进程启动。我们通过`jobs -l`命令查看作业的PID。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ ./test10.sh > test10.out &
+[1] 121
+wangsx@SC-201708020022:~/tmp$ jobs -l
+[1]+   121 运行中               ./test10.sh > test10.out &
+```
+
+下面看`jobs`命令的一些参数：
+
+| 参数   | 语法                       |
+| ---- | ------------------------ |
+| -l   | 列出进程的PID以及作业号            |
+| -n   | 只列出上次shell发出的通知后改变了状态的作业 |
+| -p   | 只列出作业的PID                |
+| -r   | 只列出运行中的作业                |
+| -s   | 只列出已停止的作业                |
+
+如果仔细注意的话，我们发现作业号后面有`+`号。带加号的作业会被当成默认作业。当前的默认作业完成处理后，带减号的作业成为下一个默认作业。任何时候只有一个带加号的作业和一个带减号的作业。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ jobs -l
+[1]    132 运行中               ./test10.sh > test10.out &
+[2]-   134 运行中               ./test10.sh > test10.out &
+[3]+   136 运行中               ./test10.sh > test10.out &
+```
+
+可以发现最好运行的脚本输出排在最前面。
+
+我们调用了`kill`命令向默认进程发送了一个`SIGHUP`信号，终止了该作业。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ ./test10.sh > test10.out &
+[1] 165
+wangsx@SC-201708020022:~/tmp$ ./test10.sh > test10.out &
+[2] 167
+wangsx@SC-201708020022:~/tmp$ ./test10.sh > test10.out &
+[3] 169
+wangsx@SC-201708020022:~/tmp$ jobs -l
+[1]    165 运行中               ./test10.sh > test10.out &
+[2]-   167 运行中               ./test10.sh > test10.out &
+[3]+   169 运行中               ./test10.sh > test10.out &
+wangsx@SC-201708020022:~/tmp$ kill 169
+wangsx@SC-201708020022:~/tmp$ jobs -l
+[1]    165 运行中               ./test10.sh > test10.out &
+[2]-   167 运行中               ./test10.sh > test10.out &
+[3]+   169 已终止               ./test10.sh > test10.out
+wangsx@SC-201708020022:~/tmp$ jobs -l
+[1]-   165 运行中               ./test10.sh > test10.out &
+[2]+   167 运行中               ./test10.sh > test10.out &
+```
+
+### 重启停止的作业
+
+我们可以将已经停止的作业作为后台进程或者前台进程重启。前台进程会接管当前工作的终端，所以使用时需要注意。
+
+要以后台模式重启一个作业，可以用`bg`命令加上作业号（我的Window10子系统好像确实不能使用Ctrl+Z的功能，有兴趣可以自己测试一下）。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ ./test10.sh
+Script Process ID: 13
+Loop #1
+^ZLoop #2
+^C
+wangsx@SC-201708020022:~/tmp$ bg
+bash: bg: 当前: 无此任务
+wangsx@SC-201708020022:~/tmp$ jobs
+```
+
+如果是默认作业，只需要使用`bg`命令。如果有多个作业，你得在`bg`命令后加上作业号。
+
+
+
+## 调整谦让度
+
+在Linux中，内核负责将CPU时间分配给系统上运行的每一个进程。**调度优先级**是内核分配给进程的CPU时间。在Linux系统中，由shell启动的所有进程的调度优先级默认都是相同的。
+
+调度优先级是一个整数值，从-20（最高）到+19（最低）。默认bash shell以优先级0来启动所有进程。
+
+我们可以使用`nice`命令来改变shell脚本的优先级。
+
+### nice命令
+
+要让命令以更低的优先级运行，只要用`nice`的`-n`命令行来指定新的优先级级别。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ sudo nice -n 10 ./test10.sh > test10.out &
+[2] 36
+wangsx@SC-201708020022:~/tmp$ ps -p 36 -o pid,ppid,ni,cmd
+  PID  PPID  NI CMD
+   36     2   0 sudo nice -n 10 ./test10.sh
+
+[2]+  已停止               sudo nice -n 10 ./test10.sh > test10.out
+```
+
+### renice命令
+
+
+
+## 定时运行脚本
+
+Linux系统提供了多个在预定时间运行脚本的方法：`at`命令和`cron`表。
+
+### 用`at`命令来计划执行任务
+
+`at`命令允许指定Linux系统何时运行脚本。`at`命令会将作业提交到队列中，指定shell何时运行该作业。`at`的守护进程`atd`会以后台模式运行，检查作业队列来运行作业。
+
+`atd`守护进程会检查系统上的一个特殊目录（通常位于`/var/spool/at`）来获取用`at`命令提交的作业。
+
+#### at命令的格式
+
+```shell
+at [-f filename] time
+```
+
+默认，`at`命令会将`STDIN`的输入放入队列中。我们可以用`-f`参数来指定用于读取命令的文件名。`time`参数指定了Linux系统何时运行该脚本。
+
+`at`命令能识别多种不同的时间格式。
+
+- 标准的小时和分钟格式，比如10:15
+- AM/PM指示符，比如10:15 PM
+- 特定可命令的时间，比如now, noon, midnight或teatime （4 PM）
+
+除了指定运行时间，还可以指定运行的日期。
+
+- 标准日期格式，比如MMDDYY, MM/DD/YY或DD.MM.YY
+- 文本日期，比如Jul 4或Dec 25，加不加年份都可以
+- 还可以指定时间增量
+  - 当前时间+25min
+  - 明天10:15PM
+  - 10:15+7天
+
+针对不同的优先级，存在26种不同的作业队列。作业队列通常用小写字母a-z和大写字母A-Z来指代。
+
+作业队列的字母排序越高，作业运行的优先级就越低（更高的nice值）。可以用`-q`参数指定不同的队列字母。
+
+#### 获取作业的输出
+
+Linux系统会将提交作业的用户的电子邮件地址作为STDOUT和STDERR。任何发到STDOUT或STDERR的输出都会通过邮件系统发送给用户。
+
+```shell
+# 解决atd没启动的问题
+wangsx@SC-201708020022:~/tmp$ sudo /etc/init.d/atd start
+```
+
+
+
+```shell
+wangsx@SC-201708020022:~/tmp$ cat test13.sh
+#!/bin/bash
+# Test using at command
+#
+echo "This script ran at $(date +%B%d,%T)"
+echo
+sleep 5
+echo "This is the script's end..."
+#
+wangsx@SC-201708020022:~/tmp$ at -f test13.sh now
+warning: commands will be executed using /bin/sh
+job 4 at Tue Sep 26 12:12:00 2017
+```
+
+`at`命令会显示分配给作业的作业号以及为作业安排的运行时间。`at`命令利用`sendmail`应用程序来发送邮件。如果没有安装这个工具就无法获得输出，因此在使用`at`命令时，最好在脚本中对STDOUT和STDERR进行重定向。
+
+```shell
+wangsx@SC-201708020022:~/tmp$ cat test13b.sh
+#!/bin/bash
+# Test using at command
+#
+echo "This script ran at $(date +%B%d,%T)" > test13b.out
+echo >> test13b.out
+sleep 5
+echo "This is the script's end..." >> test13b.out
+#
+wangsx@SC-201708020022:~/tmp$ at -M -f test13b.sh now
+warning: commands will be executed using /bin/sh
+job 7 at Tue Sep 26 12:16:00 2017
+wangsx@SC-201708020022:~/tmp$ cat test13b.out
+This script ran at 九月26,12:16:24
+
+This is the script's end...
+```
+
+这里使用了`-M`选项来屏蔽作业产生的输出信息。
 
