@@ -289,6 +289,12 @@ sidebar:
 #links_layout: inline
 #links:
   #Title: http://example.com/
+links_title: 推荐阅读
+links:
+  阮一峰的网络日志: http://www.ruanyifeng.com/blog/archives.html
+  R的极客理想系列: http://blog.fens.me/series-r/
+  谢益辉: https://yihui.name/
+  解螺旋的矿工: http://www.huangshujia.me/
 
 
 # ---------------------------------------------------------------
