@@ -195,7 +195,7 @@ An object of class 'AnnotatedDataFrame': none
 image(CLLbatch[,1])
 ```
 
-![](images/cel.png)
+![](/images/cel.png)
 
 芯片左上角的花纹和芯片名称可以帮助我们来了解芯片数据是否可靠。根据图像信息，可以对芯片的信号强度产生一个总体认识：图像特别黑，信号强度低；图像特别亮，信号可能过饱和。
 
@@ -223,7 +223,7 @@ Data.qc <- qc(CLLbatch)
 plot(Data.qc)
 ```
 
-![](images/qc.png)
+![](/images/qc.png)
 
 上图显示的是全部数据的质量控制总览图。第一列是所有样本的名称；第二列是两个数字，上面的是以百分比形式出现的检出率，下面的数字表明平均背景噪声。第三列（“QC Stats”）最下面的横轴是尺度因子等指标对应的坐标，取值范围从-3到3。第3列用到了三项指标：尺度因子、GAPDH 3'/5' 比值和actin 3'/5'比值，分别用实心圆、空心圆和三角标志表示出来。如果出现红色的“bioB”字样，说明该样品中未能检测到BioB。
 
@@ -270,13 +270,13 @@ Mbox(Pset, ylim=c(-1, 1), col=colors, main="RLE", las=3)
 boxplot(Pset, ylim=c(0.95, 1.22), col=colors, main="NUSE", las=3)
 ```
 
-![](images/rle.png)
+![](/images/rle.png)
 
 NUSE是一种比RLE更为敏感的质量检测手段。我们可以结合NUSE图来确定是否某个芯片质量有问题。NUSE定义为一个探针组在某个样品的PM值的标准差除以该探针值在各样品中的PM标准差的中位数。**如果所有芯片的质量都是非常可靠的话，那么它们的标准差会非常接近，因此它们的NUSE值都会在1附近**。
 
 > 然而，如果有些芯片质量有问题的话，就会严重地偏离1，进而导致其他芯片地NUSE值偏向相反的方向。当然，存在一种极端的情况，就是大部分芯片都出问题了，但是它们的标准差却比较接近，反而会显得没有质量问题的芯片的NUSE值会明显偏离1，所以必须结合两种图作出可靠的判断。
 
-![](images/nuse.png)
+![](/images/nuse.png)
 
 可以看到CLL1和CLL10的质量明显有别于其他样品，需要舍弃。
 
@@ -290,7 +290,7 @@ plotAffyRNAdeg(data.deg, col=colors)
 legend("topleft", rownames(pData(CLLbatch)), col=colors, lwd=1, inset=0.05, cex=0.5)
 ```
 
-![](images/RNAdeg.png)
+![](/images/RNAdeg.png)
 
 ```R
 CLLbatch <- CLLbatch[, -match(c("CLL10.CEL", "CLL1.CEL", "CLL13.CEL"),
@@ -334,13 +334,13 @@ groups <- factor(disease[,2])
 plotPCA(eset, addtext=samplenames, groups=groups, groupnames=levels(groups))
 ```
 
-![](images/cluster.png)
+![](/images/cluster.png)
 
 从聚类分析的结果来看，稳定组和恶化组根本不能很好分开。这还不能判定实验失败。**理论上讲，如果总体上两组数据是分开的，那么说明我们关心的导致癌症从稳定到恶化的因素起到了主要因素。如果不是，需要具体问题具体分析。**CLL数据的实验样本来自不同个体，而不是细胞，很可能个体差异起到了主导作用，因此导致聚类被整体打乱。所以只有当聚类图中有明显的类别差异时，才适合考虑去除个别不归类的样品；如果整体分类被打乱，则不能简单判定所有样品都出了问题。
 
 芯片分析往往采用两个主成分来构建分类图，我们从下图可以看出两组根本就不能很好分开。
 
-![](images/pca.png)
+![](/images/pca.png)
 
 注意，使用主成分分析时，还必须考虑前2个主成分是否具有代表性，这要看前2个主成分的累计贡献率，如果低于60%，可以考虑采用多维尺度分析来构建分类图。
 
@@ -500,35 +500,35 @@ boxplot(CLLgcrma, col=colors, las=3, main="gcRMA")
 
 先看信号强度分布图
 
-![](images/intensity_original.png)
+![](/images/intensity_original.png)
 
-![](images/intensity_mas5.png)
-
-
-
-![](images/intensity_rma.png)
+![](/images/intensity_mas5.png)
 
 
 
-![](images/intensity_gcrma.png)
+![](/images/intensity_rma.png)
+
+
+
+![](/images/intensity_gcrma.png)
 
 这里简要说明：RMA算法将多条曲线重合到了一起，有利于进一步的差异分析，但却出现了双峰现象，不符合高斯正态分布。很显然gcRMA算法在这里表现的更好。当然，这不意味着gcRMA算法总是优越于RMA算法。
 
 下面看箱线图结果：
 
-![](images/boxplot_original.png)
+![](/images/boxplot_original.png)
 
 
 
-![](images/boxplot_mas.png)
+![](/images/boxplot_mas.png)
 
 
 
-![](images/boxplot_rma.png)
+![](/images/boxplot_rma.png)
 
 
 
-![](images/boxplot_gcrma.png)
+![](/images/boxplot_gcrma.png)
 
 
 
@@ -536,11 +536,11 @@ boxplot(CLLgcrma, col=colors, las=3, main="gcRMA")
 
 最后我们可以通过MA图来查看标准化处理的效果。
 
-![](images/orignal_ma_plot.png)
+![](/images/orignal_ma_plot.png)
 
 
 
-![](images/gcrma_ma_plot.png)
+![](/images/gcrma_ma_plot.png)
 
 
 
@@ -838,7 +838,7 @@ pheatmap(selected[1:20,], color = colorRampPalette(c("green", "black", "red"))(1
 
 **热图**
 
-![](images/pheatmap.png)
+![](/images/pheatmap.png)
 
 (截图原因，没有显示完全)
 
@@ -854,7 +854,7 @@ plot(subGHandle)
 
 **显著富集的GO term关系图**
 
-![](images/subgraph_go.png)
+![](/images/subgraph_go.png)
 
 
 
@@ -868,6 +868,7 @@ yyy <- geneAnswersSort(yy, sortBy = "pvalue")
 geneAnswersHeatmap(yyy)
 ```
 
+（这里两个结果图因为我的依赖包配置有问题，还没有解决，大家可以自己试试。）
 
 
 ## 总结
