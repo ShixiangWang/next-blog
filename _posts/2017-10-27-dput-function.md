@@ -15,7 +15,7 @@ tags:
 
 <!-- more -->
 
-举个例子，加入你有这样一个数据框：
+举个例子，假如你有这样一个数据框：
 ```R
 > staff
       name salary years_old
