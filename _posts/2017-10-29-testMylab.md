@@ -14,7 +14,7 @@ tags:
 
 **Xue-SongLiu lab** study the fundamental difference between ***cancer cell*** and ***normal somatic cell***. With a purpose to identify ***cancer specific biomarkers*** and ***therapeutic targets***. Multiple approaches, including cell ***biochemistry***, ***bioinformatics*** and ***mouse modeling***, are combined to investigate the basic mechanisms in cancer.
 
- 
+ <!-- more -->
 
 ## Research projects
 
