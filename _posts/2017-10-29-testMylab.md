@@ -28,8 +28,7 @@ tags:
 ### 2. Cancer chromatin structure
 
 Combing ***high throughput sequencing techniques*** (eg. Hi-C) and ***super-resolution microscope*** to study the ***chromatin structure alterations*** during the evolution of human cancer. 
-
-##  
+ 
 
 ## Lab pictures
 
