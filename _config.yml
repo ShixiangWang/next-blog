@@ -390,7 +390,7 @@ baidu_analytics: 36443ede179652b0cf6a526f12b1976f
 # Disqus
 disqus:
   enable: true
-  shortname: 王诗翔
+  shortname: anchoret
   count: true
 
 # Hypercomments
