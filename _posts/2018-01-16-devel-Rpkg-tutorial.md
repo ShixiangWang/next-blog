@@ -89,7 +89,7 @@ hist(life$hlef, xlab="Healthy Life Expectancy (years) at Age 65",
      col="grey", breaks = 10)
 ```
 
-![plot of chunk unnamed-chunk-2](../figures/figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-2](/figures/figure/unnamed-chunk-2-1.png)
 
 上图可以看出因变量是负偏的，较低的值数量较少。
 
@@ -105,7 +105,7 @@ ggplot(data=life, aes(x=region, y=hlef)) +
     theme_bw()
 ```
 
-![plot of chunk unnamed-chunk-3](../figures/figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](/figures/figure/unnamed-chunk-3-1.png)
 
 上图中的每个点代表一个州，每个地区的方差都有所不同，东北部和南部的方差差异最大。
 
@@ -159,7 +159,7 @@ plot(results, col="lightblue", main="Multiple Comparisons",
      xlab="US Region", ylab="Healthy Life Expectancy (years) at Age 65")
 ```
 
-![plot of chunk unnamed-chunk-4](../figures/figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](/figures/figure/unnamed-chunk-4-1.png)
 
 首先，代码运行了一个Kruskal-Wallis检验，这是对不同地区间HLE差异的总体检验，p值0.0005指出确实存在差异。
 
@@ -477,7 +477,7 @@ plot(results, col="lightblue", main="Multiple Comparisons",
      xlab="US Region", ylab="Healthy Life Expectancy (years) at Age 65")
 ```
 
-![plot of chunk unnamed-chunk-7](../figures/figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-7](/figures/figure/unnamed-chunk-7-1.png)
 
 不像标准的箱线图，这幅图提供了展示每一组中位数和样本量的标记，还有一条展现出总体中位数的虚线。下面是函数的源代码：
 
