@@ -121,7 +121,6 @@ menu:
   archives: /archives/
   tags: /tags/
   sitemap: /sitemap.xml
-  commonweal: /404.html
 
 
 # Enable/Disable menu icons.
@@ -269,7 +268,7 @@ sidebar:
   #  - remove  Totally remove sidebar including sidebar toggle.
   #display: post
   #display: always
-  display: hide
+  display: always
   #display: remove
 
   # Sidebar offset from top menubar in pixels.
