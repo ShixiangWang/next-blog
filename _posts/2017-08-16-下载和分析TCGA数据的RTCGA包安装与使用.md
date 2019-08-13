@@ -22,8 +22,6 @@ source("http://bioconductor.org/biocLite.R")
 
 Windows下，如果安装出现问题，请查看依赖包是否完整。我安装时发现XML包可能需要单独安装。
 
-<!-- more -->
-
 如果你是Linux系统，而且XML包一直安装不上，请仔细查看错误信息。有可能是你的系统没有XML和curl配置，导致不能安装XML以及Rcurl包（具体依据错误信息分析）。在终端下输入
 
 ```shell
